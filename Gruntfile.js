@@ -4,6 +4,7 @@ module.exports = function ( grunt ) {
    * Load required Grunt tasks. These are installed based on the versions listed
    * in `package.json` when you do `npm install` in this directory.
    */
+  grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -35,6 +36,20 @@ module.exports = function ( grunt ) {
      * version. It's already there, so we don't repeat ourselves here.
      */
     pkg: grunt.file.readJSON("package.json"),
+
+    connect: {
+      server: {
+        options: {
+          port: 8080,
+          base: 'build',
+          middleware: [
+            function ( req, res, next ) {
+              res.end('Hello, world!');
+            }
+          ]
+        }
+      }
+    },
 
     /**
      * The banner is the comment that is placed at the top of our compiled 
