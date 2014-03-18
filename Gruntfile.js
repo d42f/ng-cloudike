@@ -40,13 +40,17 @@ module.exports = function ( grunt ) {
     connect: {
       server: {
         options: {
-          port: 8080,
+          port: 3000,
           base: 'build',
-          middleware: [
-            function ( req, res, next ) {
-              res.end('Hello, world!');
-            }
-          ]
+          keepalive: true,
+          middleware: function ( connect, options, middlewares ) {
+            middlewares.push(function ( req, res, next ) {
+              // тут мы чекним если есть обращение к страничке с диском, то проверяем авторизацию
+              return next();
+            });
+
+            return middlewares;
+          }
         }
       }
     },
